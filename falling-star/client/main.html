@@ -1,25 +1,40 @@
 <head>
-  <title>simple</title>
+  <title>Falling Star Blog</title>
 </head>
 
 <body>
   <h1>Welcome to Meteor!</h1>
 
-  {{> hello}}
-  {{> info}}
+  {{> login}}
+  {{> blogdisplay}}
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="login">
+<form class="login">
+  <span>User name: </span><input name = "user" type = "text"/><br>
+  <span>Password: </span><input name = "pass" type = "password"/><br>  
+  <input type = "submit" value = "submit"/>
+</form>
+  <hr>
 </template>
 
-<template name="info">
-  <h2>Learn Meteor!</h2>
-  <ul>
-    <li><a href="https://www.meteor.com/try">Do the Tutorial</a></li>
-    <li><a href="http://guide.meteor.com">Follow the Guide</a></li>
-    <li><a href="https://docs.meteor.com">Read the Docs</a></li>
-    <li><a href="https://forums.meteor.com">Discussions</a></li>
-  </ul>
+<template name="blogdisplay">
+<!--Loads the blog publicly-->
+  <h2 class = "blogtop">Falling Star Blog</h2>
+  {{#each Blogs}}
+	<hr>
+	<h3>{{title}}</h3>
+	<p>{{description}}</p>
+	<h4>By: {{userid}} on {{datetime}}</h4>
+	<hr>
+  {{/each}}
+</template>
+
+<template name="blogentry">
+<form class ="blogcreate">
+  <span>Title: </span><input name = "title"/><br>
+  <span>Description: </span><input name = "desc"/><br>  
+  <input type = "submit" value = "create"/>
+  <hr>
+</form>
 </template>

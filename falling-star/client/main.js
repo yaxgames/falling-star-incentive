@@ -3,20 +3,31 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
 
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
+//Collections shared in the client 
+Blogs = new Mongo.Collection("blogs");
+Users = new Mongo.Collection("users");
+CurrentUser = "";
+Template.blogdisplay.helpers({
+	Blogs: function(){
+		return Blogs.find({}, {sort: {datetime:-1}});
+	}
 });
 
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
+Template.login.events({
+	"submit .login": function(e){
+		var loginattempt = [e.target.user.value,e.target.pass.value];
+		//to proceed with the login check
+		return false;
+	}
 });
 
-Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
+Template.login.events({
+	//Creating new blogs via the create form
+	"submit .blogcreate": function(e){
+		var blogentry = [e.target.title.value,e.target.desc.value];
+		var cUserID = Users.find({username: CurrentUser}).fetch()[0].userid;
+		Blogs.insert({title: blogentry[0], description: blogentry[1],datetime: Date(), userid: cUserID});
+		
+		return false;
+	}
 });
