@@ -42,6 +42,15 @@ Template.login.events({
 	"submit .login": function(e){
 	console.log("test login");
 		var loginattempt = [e.target.user.value,e.target.pass.value];
+		if(Users.find({username: loginattempt[0]}).fetch()[0] != undefined){
+			if(Users.find({username: loginattempt[0]}).fetch()[0].password == loginattempt[1]){
+				Session.set("currentuser",loginattempt[0]);
+			}else{
+				alert("Username/password not found - 1");
+			}
+		}else{
+				alert("Username/password not found - 2");
+		}
 		//to proceed with the login check
 		return false;
 	}
