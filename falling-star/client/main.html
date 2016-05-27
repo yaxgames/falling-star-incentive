@@ -6,7 +6,8 @@
   <h1>Welcome to Meteor!</h1>
 
   {{> login}}
-  {{> blogdisplay}}
+  {{>blogcreate}}
+  {{>blogdisplay}}
 </body>
 
 <template name="login">
@@ -30,7 +31,8 @@
   {{/each}}
 </template>
 
-<template name="blogentry">
+<template name="blogcreate">
+<!--enter the blog-->
 <hr>
 <form class ="blogcreate">
   <span>Title: </span><input name = "title"/><br>
