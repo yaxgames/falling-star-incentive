@@ -6,7 +6,8 @@ import './main.html';
 //Collections shared in the client 
 Blogs = new Mongo.Collection("blogs");
 Users = new Mongo.Collection("users");
-CurrentUser = 0;
+//Creating session to hold temporary variables such as current user logged in.
+Session.set("currentuser","");
 userloggedin = false;
 //helpers
 Template.blogdisplay.helpers({
@@ -16,19 +17,19 @@ Template.blogdisplay.helpers({
 });
 Template.login.helpers({
 	'nouser':function(){	
-		if (CurrentUser == 0 || CurrentUser == undefined){
+		if (Session.equals("currentuser","")){
 			console.log("no user logged in");
 			return true;
 		}
-		console.log("user logged in " + CurrentUser);
+		console.log("user logged in " + Session.get("currentuser"));
 		return false;
 	}
 	
 });
 Template.blogcreate.helpers({
 	'userlogged': function(){
-		if (CurrentUser != 0 && CurrentUser != undefined){
-		console.log("user logged in " + CurrentUser);
+		if (!Session.equals("currentuser","")){
+		console.log("user logged in " + Session.get("currentuser"));
 			return true;
 		}
 		console.log("No user logged in ");
@@ -51,7 +52,7 @@ Template.blogcreate.events({
 	"submit .blogcreate": function(e){
 	console.log("new blog: " + e.target.title.value);
 		var blogentry = [e.target.title.value,e.target.desc.value];
-		var cUserID = 0;//Users.find({username: CurrentUser}).fetch()[0].userid;
+		var cUserID = Session.get("currentuser");//Users.find({username: CurrentUser}).fetch()[0].userid;
 		Blogs.insert({title: blogentry[0], description: blogentry[1],datetime: Date(), userid: cUserID});
 		
 		return false;
