@@ -5,17 +5,19 @@
 <body>
   <h1>Welcome to Meteor!</h1>
 
-  {{> login}}
+  {{>login}}
   {{>blogcreate}}
   {{>blogdisplay}}
 </body>
 
 <template name="login">
+{{#if nouser}}
 <form class="login">
   <span>User name: </span><input name = "user" type = "text"/><br>
   <span>Password: </span><input name = "pass" type = "password"/><br>  
   <input type = "submit" value = "submit"/>
 </form>
+{{/if}}
   <hr>
 </template>
 
@@ -33,6 +35,7 @@
 
 <template name="blogcreate">
 <!--enter the blog-->
+{{#if userlogged}}
 <hr>
 <form class ="blogcreate">
   <span>Title: </span><input name = "title"/><br>
@@ -40,4 +43,5 @@
   <input type = "submit" value = "create"/>
   <hr>
 </form>
+{{/if}}
 </template>
