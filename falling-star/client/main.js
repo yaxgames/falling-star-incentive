@@ -61,9 +61,18 @@ Template.blogcreate.events({
 	"submit .blogcreate": function(e){
 	console.log("new blog: " + e.target.title.value);
 		var blogentry = [e.target.title.value,e.target.desc.value];
-		var cUserID = Users.find({username: Session.get("currentuser")}).fetch()[0].userid;
+		var cUserID = Users.find({username:Session.get("currentuser")}).fetch()[0]._id
+//"R8CrNZbakfxMBvfpY"//Users.find({username: Session.get("currentuser")}).fetch()[0].userid;
 		Blogs.insert({title: blogentry[0], description: blogentry[1],datetime: Date(), userid: cUserID});
 		
 		return false;
+	}
+});
+
+Template.blogdisplay.events({
+	//removing the blog from the collection
+	"click .remove": function(e){
+		console.log("removing collection item " + this._id);
+		Blogs.remove(this._id);
 	}
 });
