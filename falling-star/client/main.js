@@ -134,7 +134,7 @@ Template.userregister.events({
 			Session.set('registerdisplay',false);
 		}
 	},
-	
+	//COntinue from here
 	'submit .userregister':function(e){
 		console.log("register" + e.target.name.value);
 		var regattempt = [e.target.name.value,e.target.user.value,e.target.pass.value,e.target.desc.value];
