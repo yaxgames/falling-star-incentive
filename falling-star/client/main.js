@@ -26,6 +26,12 @@ Template.blogdisplay.helpers({
 	}
 });
 
+Template.blogdisplay.helpers({
+	'dateformat':function(date){
+		return moment(date).format('YYYY-MMM-DD');
+	}
+});
+
 Template.login.helpers({
 	'nouser':function(){	
 		if (Session.equals("currentuser","")){
@@ -47,6 +53,7 @@ Template.blogcreate.helpers({
 		return false;
 	}
 });
+
 
 //events
 Template.login.events({
@@ -82,7 +89,7 @@ Template.blogcreate.events({
 
 Template.blogdisplay.events({
 	//removing the blog from the collection
-	"click .remove": function(e){
+	"click #remove": function(e){
 	console.log(this._id);
 		if(!Session.equals("currentuser","")){
 			if(Users.find({username:Session.get("currentuser")}).fetch()[0]._id == Blogs.findOne(this._id).userid){

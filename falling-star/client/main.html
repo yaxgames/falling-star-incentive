@@ -13,9 +13,9 @@
 <template name="login">
 {{#if nouser}}
 <form class="login">
-  <span>User name: </span><input name = "user" type = "text"/><br>
-  <span>Password: </span><input name = "pass" type = "password"/><br>  
-  <input type = "submit" value = "submit"/>
+  <span>User name: </span><input name = "user" type = "text" class = "form-control"/>
+  <span>Password: </span><input name = "pass" type = "password" class = "form-control"/>  
+  <input type = "submit" value = "submit" class = "btn btn-primary"/>
 </form>
 {{/if}}
   <hr>
@@ -28,19 +28,19 @@
 	<hr>
 	<h3>{{title}}</h3>
 	<p>{{description}}</p>
-	<h4>By: {{username}} on {{datetime}}</h4>
+	<kbd>By: {{username}} on {{dateformat datetime}}</kbd>
 	<hr>
 	<!--checks if the same user who made the blog is able to remove or edit-->
 	{{#if sameuser userid}}
 	<!--Remove Blog-->
-	<input class = "remove" type = "button" value = "remove"/>
+	<input id = "remove" class ="btn btn-danger btn-sm" type = "button" value = "remove"/>
 	<hr>
 	<!--edit the blog-->
 	<hr>
 	<form class ="blogedit">
-		<span>Title: </span><input name = "title" /><br>
-		<span>Description: </span><input name = "desc"/><br>  
-		<input type = "submit" value = "edit"/>
+		<span>Title: </span><input name = "title" class = "form-control"/><br>
+		<span>Description: </span><input name = "desc" class = "form-control"/><br>  
+		<input type = "submit" value = "edit" class = "btn btn-info"/>
 		<hr>
 	</form>
 
@@ -53,9 +53,9 @@
 {{#if userlogged}}
 <hr>
 <form class ="blogcreate">
-  <span>Title: </span><input name = "title"/><br>
-  <span>Description: </span><input name = "desc"/><br>  
-  <input type = "submit" value = "create"/>
+  <span>Title: </span><input name = "title" class = "form-control"/><br>
+  <span>Description: </span><input name = "desc" class = "form-control"/><br>  
+  <input type = "submit" value = "create" class = "btn btn-info"/>
   <hr>
 </form>
 {{/if}}
