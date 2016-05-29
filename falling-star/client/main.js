@@ -74,7 +74,7 @@ Template.userregister.helpers({
 //events
 Template.login.events({
 	"submit .login": function(e){
-	console.log("test login");
+	
 		var loginattempt = [e.target.user.value,e.target.pass.value];
 		if(Users.find({username: loginattempt[0]}).fetch()[0] != undefined){
 			if(Users.find({username: loginattempt[0]}).fetch()[0].password == loginattempt[1]){
@@ -133,5 +133,20 @@ Template.userregister.events({
 		}else{
 			Session.set('registerdisplay',false);
 		}
+	},
+	
+	'submit .userregister':function(e){
+		console.log("register" + e.target.name.value);
+		var regattempt = [e.target.name.value,e.target.user.value,e.target.pass.value,e.target.desc.value];
+		if(Users.find({username: loginattempt[1]}).fetch()[0] != undefined){
+			alert("user already exists");
+			e.target.name.value = "";
+			
+		}else{
+			Users.insert({userid:0,name:regattempt[0],username:regattempt[1],password:regattempt[2],descriotion:regattempt[3]});	
+		}
+		
+		return false;
 	}
+	
 });
