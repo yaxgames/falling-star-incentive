@@ -6,6 +6,7 @@
   <h1>Welcome to Meteor!</h1>
 
   {{>login}}
+  {{>userregister}}
   {{>blogcreate}}
   {{>blogdisplay}}
 </body>
@@ -61,7 +62,21 @@
 {{/if}}
 </template>
 
-<template name="blogedit">
-
+<template name="userregister">
+<!--register new user-->
+{{#if nouser}}
+<div class="register">
+	<a href="#" >Register</a>
+</div>
+{{#if registerdisplay}}
+<form class ="userregister">
+  <span>Name (First and Last): </span><input type="text" name = "name" class = "form-control"/>
+  <span>Username: </span><input type="text" name = "user" class = "form-control"/>  
+  <span>Password: </span><input type="password" name = "pass" class = "form-control"/>  
+  <input type = "submit" value = "Register" class = "btn btn-info"/>
+  <hr>
+</form>
+{{/if}}
+{{/if}}
 </template>
 

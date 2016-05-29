@@ -8,6 +8,7 @@ Blogs = new Mongo.Collection("blogs");
 Users = new Mongo.Collection("users");
 //Creating session to hold temporary variables such as current user logged in.
 Session.set("currentuser","");
+Session.set('registerdisplay',false);
 userloggedin = false;
 //helpers
 Template.blogdisplay.helpers({
@@ -28,11 +29,22 @@ Template.blogdisplay.helpers({
 
 Template.blogdisplay.helpers({
 	'dateformat':function(date){
-		return moment(date).format('YYYY-MMM-DD');
+		return moment(date).format('YYYY-MMM-DD h:mm:ss a');
 	}
 });
 
 Template.login.helpers({
+	'nouser':function(){	
+		if (Session.equals("currentuser","")){
+			console.log("no user logged in");
+			return true;
+		}
+		console.log("user logged in " + Session.get("currentuser"));
+		return false;
+	}
+	
+});
+Template.userregister.helpers({
 	'nouser':function(){	
 		if (Session.equals("currentuser","")){
 			console.log("no user logged in");
@@ -54,7 +66,11 @@ Template.blogcreate.helpers({
 	}
 });
 
-
+Template.userregister.helpers({
+	'registerdisplay':function(){
+		return Session.get('registerdisplay');
+	}
+});
 //events
 Template.login.events({
 	"submit .login": function(e){
@@ -106,5 +122,16 @@ Template.blogdisplay.events({
 		console.log(this._id);
 		Blogs.update(this._id,{title:e.target.title.value, description:e.target.desc.value, datetime: Date(),userid: Users.find({username:Session.get("currentuser")}).fetch()[0]._id, username: Session.get("currentuser")});
 		return false;
+	}
+});
+
+Template.userregister.events({
+	'click .register': function(){
+		
+		if(!Session.get('registerdisplay')){
+			Session.set('registerdisplay',true);
+		}else{
+			Session.set('registerdisplay',false);
+		}
 	}
 });
