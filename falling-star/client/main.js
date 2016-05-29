@@ -15,6 +15,17 @@ Template.blogdisplay.helpers({
 		return Blogs.find({}, {sort: {datetime:-1}});
 	}
 });
+Template.blogdisplay.helpers({
+	'sameuser':function(bloguser){
+		if(!Session.equals("currentuser","")){
+			if(bloguser == Users.find({username:Session.get("currentuser")}).fetch()[0]._id){
+				return true;
+			}
+			return false;
+		}
+	}
+});
+
 Template.login.helpers({
 	'nouser':function(){	
 		if (Session.equals("currentuser","")){
@@ -61,9 +72,32 @@ Template.blogcreate.events({
 	"submit .blogcreate": function(e){
 	console.log("new blog: " + e.target.title.value);
 		var blogentry = [e.target.title.value,e.target.desc.value];
-		var cUserID = Users.find({username: Session.get("currentuser")}).fetch()[0].userid;
-		Blogs.insert({title: blogentry[0], description: blogentry[1],datetime: Date(), userid: cUserID});
+		var cUserID = Users.find({username:Session.get("currentuser")}).fetch()[0]._id
+//"R8CrNZbakfxMBvfpY"//Users.find({username: Session.get("currentuser")}).fetch()[0].userid;
+		Blogs.insert({title: blogentry[0], description: blogentry[1],datetime: Date(), userid: cUserID, username: Session.get("currentuser")});
 		
+		return false;
+	}
+});
+
+Template.blogdisplay.events({
+	//removing the blog from the collection
+	"click .remove": function(e){
+	console.log(this._id);
+		if(!Session.equals("currentuser","")){
+			if(Users.find({username:Session.get("currentuser")}).fetch()[0]._id == Blogs.findOne(this._id).userid){
+				console.log("removing collection item " + this._id);
+				Blogs.remove(this._id);
+			}
+		}
+	}
+	
+});
+Template.blogdisplay.events({
+	//editing the blog from the collection
+	"submit .blogedit":function(e){
+		console.log(this._id);
+		Blogs.update(this._id,{title:e.target.title.value, description:e.target.desc.value, datetime: Date(),userid: Users.find({username:Session.get("currentuser")}).fetch()[0]._id, username: Session.get("currentuser")});
 		return false;
 	}
 });
