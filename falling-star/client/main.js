@@ -89,4 +89,12 @@ Template.blogdisplay.events({
 			}
 		}
 	}
+	
+});
+Template.blogdisplay.events({
+	//editing the blog from the collection
+	"submit .blogedit":function(e){
+		console.log(this._id);
+		Blogs.update(this._id,{title:e.target.title.value, description:e.target.desc.value, datetime: Date()});
+	}
 });
