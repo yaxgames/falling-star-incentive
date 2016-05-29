@@ -15,6 +15,15 @@ Template.blogdisplay.helpers({
 		return Blogs.find({}, {sort: {datetime:-1}});
 	}
 });
+Template.blogdisplay.helpers({
+	'sameuser':function(bloguser){
+		if(bloguser == Users.find({username:Session.get("currentuser")}).fetch()[0]._id){
+			return true;
+		}
+		return false;
+	}
+});
+
 Template.login.helpers({
 	'nouser':function(){	
 		if (Session.equals("currentuser","")){
@@ -63,7 +72,7 @@ Template.blogcreate.events({
 		var blogentry = [e.target.title.value,e.target.desc.value];
 		var cUserID = Users.find({username:Session.get("currentuser")}).fetch()[0]._id
 //"R8CrNZbakfxMBvfpY"//Users.find({username: Session.get("currentuser")}).fetch()[0].userid;
-		Blogs.insert({title: blogentry[0], description: blogentry[1],datetime: Date(), userid: cUserID});
+		Blogs.insert({title: blogentry[0], description: blogentry[1],datetime: Date(), userid: cUserID, username: Session.get("currentuser")});
 		
 		return false;
 	}
@@ -72,7 +81,12 @@ Template.blogcreate.events({
 Template.blogdisplay.events({
 	//removing the blog from the collection
 	"click .remove": function(e){
-		console.log("removing collection item " + this._id);
-		Blogs.remove(this._id);
+	console.log(this._id);
+		if(!Session.equals("currentuser","")){
+			if(Users.find({username:Session.get("currentuser")}).fetch()[0]._id == Blogs.findOne(this._id).userid){
+				console.log("removing collection item " + this._id);
+				Blogs.remove(this._id);
+			}
+		}
 	}
 });

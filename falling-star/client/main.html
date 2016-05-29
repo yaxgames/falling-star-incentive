@@ -30,7 +30,9 @@
 	<p>{{description}}</p>
 	<h4>By: {{userid}} on {{datetime}}</h4>
 	<hr>
+	{{#if sameuser userid}}
 	<input class = "remove" type = "button" value = "remove"/>
+	{{/if}}
   {{/each}}
 </template>
 
