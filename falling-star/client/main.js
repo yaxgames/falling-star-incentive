@@ -17,10 +17,12 @@ Template.blogdisplay.helpers({
 });
 Template.blogdisplay.helpers({
 	'sameuser':function(bloguser){
-		if(bloguser == Users.find({username:Session.get("currentuser")}).fetch()[0]._id){
-			return true;
+		if(!Session.equals("currentuser","")){
+			if(bloguser == Users.find({username:Session.get("currentuser")}).fetch()[0]._id){
+				return true;
+			}
+			return false;
 		}
-		return false;
 	}
 });
 
@@ -95,6 +97,7 @@ Template.blogdisplay.events({
 	//editing the blog from the collection
 	"submit .blogedit":function(e){
 		console.log(this._id);
-		Blogs.update(this._id,{title:e.target.title.value, description:e.target.desc.value, datetime: Date()});
+		Blogs.update(this._id,{title:e.target.title.value, description:e.target.desc.value, datetime: Date(),userid: Users.find({username:Session.get("currentuser")}).fetch()[0]._id, username: Session.get("currentuser")});
+		return false;
 	}
 });
