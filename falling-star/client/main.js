@@ -113,18 +113,21 @@ Template.blogdisplay.events({
 				Blogs.remove(this._id);
 			}
 		}
-	}
-	
-});
-Template.blogdisplay.events({
-	//editing the blog from the collection
+	},
 	"submit .blogedit":function(e){
 		console.log(this._id);
 		Blogs.update(this._id,{title:e.target.title.value, description:e.target.desc.value, datetime: Date(),userid: Users.find({username:Session.get("currentuser")}).fetch()[0]._id, username: Session.get("currentuser")});
+		e.target.title.value =""; 
+		e.target.desc.value ="";
 		return false;
 	}
+	
 });
-
+/*Template.blogdisplay.events({
+	//editing the blog from the collection
+	
+});
+*/
 Template.userregister.events({
 	'click .register': function(){
 		
@@ -137,16 +140,20 @@ Template.userregister.events({
 
 	'submit .userregister':function(e){
 		console.log("register" + e.target.name.value + " : "+e.target.user.value+" : "+e.target.pass.value+" : "+e.target.desc.value);
-		/*
+		
 		var regattempt = [e.target.name.value,e.target.user.value,e.target.pass.value,e.target.desc.value];
-		if(Users.find({username: loginattempt[1]}).fetch()[0] != undefined){
+		if(Users.find({username: regattempt[1]}).fetch()[0] != undefined){
 			alert("user already exists");
 			e.target.name.value = "";
 			
 		}else{
 			Users.insert({userid:0,name:regattempt[0],username:regattempt[1],password:regattempt[2],descriotion:regattempt[3]});	
 		}
-		*/
+		e.target.name.value ="";
+		e.target.user.value ="";
+		e.target.pass.value ="";
+		e.target.desc.value ="";
+		Session.set("registerdisplay",false);
 		return false;
 	}
 	
