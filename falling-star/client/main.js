@@ -134,9 +134,10 @@ Template.userregister.events({
 			Session.set('registerdisplay',false);
 		}
 	},
-	//COntinue from here
+
 	'submit .userregister':function(e){
-		console.log("register" + e.target.name.value);
+		console.log("register" + e.target.name.value + " : "+e.target.user.value+" : "+e.target.pass.value+" : "+e.target.desc.value);
+		/*
 		var regattempt = [e.target.name.value,e.target.user.value,e.target.pass.value,e.target.desc.value];
 		if(Users.find({username: loginattempt[1]}).fetch()[0] != undefined){
 			alert("user already exists");
@@ -145,7 +146,7 @@ Template.userregister.events({
 		}else{
 			Users.insert({userid:0,name:regattempt[0],username:regattempt[1],password:regattempt[2],descriotion:regattempt[3]});	
 		}
-		
+		*/
 		return false;
 	}
 	
