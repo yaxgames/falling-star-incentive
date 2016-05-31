@@ -3,12 +3,14 @@
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
+  
+<div class="text-center">
+  <h1>Welcome to the Falling Star Blog</h1>
   {{>login}}
   {{>userregister}}
   {{>blogcreate}}
   {{>blogdisplay}}
+</div>
 </body>
 
 <template name="login">
@@ -16,7 +18,7 @@
 <form class="login">
   <span>User name: </span><input name = "user" type = "text" class = "form-control"/>
   <span>Password: </span><input name = "pass" type = "password" class = "form-control"/>  
-  <input type = "submit" value = "submit" class = "btn btn-primary"/>
+  <input type = "submit" value = "Log in" class = "btn btn-primary"/>
 </form>
 {{/if}}
   <hr>
@@ -35,16 +37,17 @@
 	{{#if sameuser userid}}
 	<!--Remove Blog-->
 	<input id = "remove" class ="btn btn-danger btn-sm" type = "button" value = "remove"/>
+	<input id = "edit" class ="btn btn-info btn-sm" type = "button" value = "edit blog"/>
 	<hr>
 	<!--edit the blog-->
-	<hr>
+	{{#if editdisplay}}
 	<form class ="blogedit">
 		<span>Title: </span><input name = "title" class = "form-control"/><br>
 		<span>Description: </span><input name = "desc" class = "form-control"/><br>  
 		<input type = "submit" value = "edit" class = "btn btn-info"/>
 		<hr>
 	</form>
-
+	{{/if}}
 	{{/if}}
   {{/each}}
 </template>
